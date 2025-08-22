@@ -1,0 +1,29 @@
+name: "SchemaMap Validate"
+description: "Validate CSV files against SchemaMap templates (Shopify/Stripe)"
+author: "Zach @ CodeBru.com"
+branding: 
+  icon: "check-circle"
+  color: "green"
+inputs:
+  schema:
+    description: "Template key (e.g., shopify-products, shopify-inventory, stripe-customers)"
+    required: true
+  mapping:
+    description: "Path to mapping.json file"
+    required: true
+  csv:
+    description: "Path to input CSV file"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Install SchemaMap CLI
+      run: npm i -g @schemamap/cli
+      shell: bash
+    - name: Validate CSV
+      run: schemamap validate --schema "${{ inputs.schema }}" --mapping "${{ inputs.mapping }}" < "${{ inputs.csv }}"
+      shell: bash
