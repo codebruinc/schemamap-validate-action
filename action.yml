@@ -22,7 +22,7 @@ runs:
       with:
         node-version: '20'
     - name: Install SchemaMap CLI
-      run: npm i -g @schemamap/cli
+      run: npm i -g schemamap-cli
       shell: bash
     - name: Validate CSV
       run: schemamap validate --schema "${{ inputs.schema }}" --mapping "${{ inputs.mapping }}" < "${{ inputs.csv }}"
